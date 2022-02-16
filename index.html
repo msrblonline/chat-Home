@@ -46,23 +46,22 @@
       color: #fff;
     }
 
-    #messages {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    #messages>li {
+    #messages>div {
       padding: 0.5rem 1rem;
+      width: fit-content;
     }
 
-    #messages li.chat {
+    #messages div.chat {
       background-color: #f4c639;
       max-width: 80%;
-      border-radius: 15px;
+      border-radius: 2rem;
     }
 
-    #messages li.srv-msg {
+    #messages div.chat>i {
+      font-size: x-small;
+    }
+
+    #messages div.srv-msg {
       background-color: #FAEBD7;
       color: #8F9779;
     }
@@ -70,7 +69,7 @@
 </head>
 
 <body>
-  <ul id="messages"></ul>
+  <div id="messages"></div>
   <form id="form" action="">
     <input id="input" autocomplete="off" /><button>Send</button>
   </form>
@@ -95,7 +94,7 @@
     });
 
     socket.on('chat message', function (msg) {
-      var item = document.createElement('li');
+      var item = document.createElement('div');
       item.textContent = msg;
       item.className = 'chat';
       messages.appendChild(item);
@@ -103,7 +102,7 @@
     });
 
     socket.on('client', function (client) {
-      var myLi = document.getElementsByTagName('li');
+      var myLi = document.getElementsByTagName('div');
       var lastLi = myLi[myLi.length - 1];
       if (client == username) {
         lastLi.style.marginRight = "0px";
@@ -112,11 +111,11 @@
         lastLi.style.backgroundColor = "#a7dd12";
       }
       console.log(client);
-        lastLi.innerHTML = '<strong>' + client + '</strong> said: ' + lastLi.innerText;
+      lastLi.innerHTML = '<i><strong>' + client + '</strong> said: </i>' + lastLi.innerText;
     });
 
     socket.on('server message', function (msg) {
-      var item = document.createElement('li');
+      var item = document.createElement('div');
       item.textContent = msg;
       item.className = 'srv-msg';
       messages.appendChild(item);
